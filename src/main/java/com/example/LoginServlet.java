@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
                             // Set user attributes for the profile.jsp
                             request.setAttribute("userName", resultSet.getString("name"));
                             request.setAttribute("profileImage", "/home/idrbt/Downloads/photo.jpg"); // Replace with actual image path
-                            request.setAttribute("userBio", resultSet.getString("bio"));
+                           // request.setAttribute("userBio", resultSet.getString("bio"));
                             request.setAttribute("userAddress", resultSet.getString("address"));
 
                             // Forward to profile.jsp
