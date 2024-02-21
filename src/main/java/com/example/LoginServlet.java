@@ -37,7 +37,14 @@ public class LoginServlet extends HttpServlet {
 
                     try (ResultSet resultSet = preparedStatement.executeQuery()) {
                         if (resultSet.next()) {
-                            out.println("Login successful! Welcome, " + resultSet.getString("name"));
+                            // Set user attributes for the profile.jsp
+                            request.setAttribute("userName", resultSet.getString("name"));
+                            request.setAttribute("profileImage", "/home/idrbt/Downloads/photo.jpg"); // Replace with actual image path
+                            request.setAttribute("userBio", resultSet.getString("bio"));
+                            request.setAttribute("userAddress", resultSet.getString("address"));
+
+                            // Forward to profile.jsp
+                            request.getRequestDispatcher("/profile.jsp").forward(request, response);
                         } else {
                             out.println("Invalid email or password. Please try again.");
                             System.out.println("Login failed for email: " + email);
