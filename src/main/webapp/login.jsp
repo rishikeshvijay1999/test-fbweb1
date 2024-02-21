@@ -14,6 +14,11 @@
         .error-message {
             color: red;
         }
+        #google-logo {
+            width: 100px; /* Adjust the width as needed */
+            height: auto;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -30,7 +35,7 @@
             // Display a message indicating successful registration
             out.println("<div class=\"container\">");
             out.println("<h1 class=\"success-message\">Thank you, " + name + "! You are logged in.</h1>");
-            out.println("<img src=\"path/to/your/image.jpg\" alt=\"Profile Image\">");
+            out.println("<img src=\"/home/idrbt/Downloads/fb.jpg\" alt=\"Profile Image\">");
             out.println("</div>");
         } else {
             // Display a message indicating password mismatch
@@ -70,6 +75,9 @@
         <label for="profileImage">Choose Profile Image:</label>
         <input type="file" id="profileImage" name="profileImage" accept="image/*">
         <br>
+
+        <img id="google-logo" src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google Logo">
+        <!-- Replace the above image URL with the one you prefer -->
 
         <hr>
         <br>
