@@ -1,8 +1,29 @@
-@WebServlet("/main")
-public class MainServlet extends HttpServlet {
-    // ... existing code ...
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+@WebServlet("/main")
+@MultipartConfig
+public class MainServlet extends HttpServlet {
+    private static final String JDBC_URL = "jdbc:mysql://192.168.138.114:3306/myDB";
+    private static final String JDBC_USER = "mysql";
+    private static final String JDBC_PASSWORD = "mysql";
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         PrintWriter out = response.getWriter();
 
         try {
@@ -56,6 +77,7 @@ public class MainServlet extends HttpServlet {
             out.println("Error: " + e.getMessage());
         }
     }
+
     private boolean isEmailRegistered(Connection connection, String email) throws SQLException {
         String checkEmailSql = "SELECT COUNT(*) FROM web WHERE LOWER(email) = LOWER(?)";
         try (PreparedStatement checkEmailStatement = connection.prepareStatement(checkEmailSql)) {
@@ -79,5 +101,15 @@ public class MainServlet extends HttpServlet {
         }
 
         return stringBuilder.toString();
+    }
+
+    private String getFileName(final Part part) {
+        final String partHeader = part.getHeader("content-disposition");
+        for (String content : partHeader.split(";")) {
+            if (content.trim().startsWith("filename")) {
+                return content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
+            }
+        }
+        return null;
     }
 }
