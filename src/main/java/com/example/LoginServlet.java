@@ -41,7 +41,7 @@ public class LoginServlet extends HttpServlet {
                             request.setAttribute("userName", resultSet.getString("name"));
                             request.setAttribute("profileImage", "/home/idrbt/Downloads/photo.jpg"); // Replace with actual image path
                            // request.setAttribute("userBio", resultSet.getString("bio"));
-                            request.setAttribute("userAddress", resultSet.getString("address"));
+                           // request.setAttribute("userAddress", resultSet.getString("address"));
 
                             // Forward to profile.jsp
                             request.getRequestDispatcher("/profile.jsp").forward(request, response);
