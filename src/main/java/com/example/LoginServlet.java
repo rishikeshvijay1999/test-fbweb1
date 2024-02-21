@@ -9,18 +9,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 @WebServlet("/login")
+@MultipartConfig
 public class LoginServlet extends HttpServlet {
-    private static final String JDBC_URL = "jdbc:mysql://192.168.138.114:3306/myDB";
-    private static final String JDBC_USER = "mysql";
-    private static final String JDBC_PASSWORD = "mysql";
+    private static final String JDBC_URL = "jdbc:mysql://your_database_host:3306/your_database_name";
+    private static final String JDBC_USER = "your_database_user";
+    private static final String JDBC_PASSWORD = "your_database_password";
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         PrintWriter out = response.getWriter();
 
         String email = request.getParameter("email");
@@ -39,9 +43,7 @@ public class LoginServlet extends HttpServlet {
                         if (resultSet.next()) {
                             // Set user attributes for the profile.jsp
                             request.setAttribute("userName", resultSet.getString("name"));
-                            request.setAttribute("profileImage", "/home/idrbt/Downloads/fb.jpg"); // Replace with actual image path
-                           // request.setAttribute("userBio", resultSet.getString("bio"));
-                           // request.setAttribute("userAddress", resultSet.getString("address"));
+                            request.setAttribute("userId", resultSet.getInt("id"));
 
                             // Forward to profile.jsp
                             request.getRequestDispatcher("/profile.jsp").forward(request, response);
