@@ -20,7 +20,8 @@ public class MainServletTest {
         Mockito.when(response.getWriter()).thenReturn(writer);
 
         // Test case 1: Valid input
-        Mockito.when(request.getParameter("Name")).thenReturn("John Doe");
+        
+        Mockito.when(request.getParameter("Name")).thenReturn("JohnDoe");
         Mockito.when(request.getParameter("mobile")).thenReturn("1234567890");
         Mockito.when(request.getParameter("email")).thenReturn("john.doe@example.com");
         Mockito.when(request.getParameter("psw")).thenReturn("password");
@@ -34,7 +35,7 @@ public class MainServletTest {
         assertTrue(result.contains("User registered successfully!"));
 
         // Test case 2: Invalid name (contains a number)
-        Mockito.when(request.getParameter("Name")).thenReturn("John Doe123");
+        Mockito.when(request.getParameter("Name")).thenReturn("JohnDoe123");
         new MainServlet().doPost(request, response);
 
         writer.flush();
@@ -42,7 +43,7 @@ public class MainServletTest {
         assertTrue(result.contains("Invalid input for Name"));
 
         // Test case 3: Invalid mobile number (not 10 digits)
-        Mockito.when(request.getParameter("Name")).thenReturn("John Doe");
+        Mockito.when(request.getParameter("Name")).thenReturn("JohnDoe");
         Mockito.when(request.getParameter("mobile")).thenReturn("123456789");
         new MainServlet().doPost(request, response);
 
