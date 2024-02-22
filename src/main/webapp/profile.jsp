@@ -1,4 +1,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.io.File" %>
+<%@ page import="java.io.IOException" %>
+<%@ page import="java.io.PrintWriter" %>
+<%@ page import="java.security.MessageDigest" %>
+<%@ page import="java.security.NoSuchAlgorithmException" %>
+<%@ page import="java.util.Collection" %>
+<%@ page import="javax.servlet.ServletException" %>
+<%@ page import="javax.servlet.annotation.MultipartConfig" %>
+<%@ page import="javax.servlet.annotation.WebServlet" %>
+<%@ page import="javax.servlet.http.HttpServlet" %>
+<%@ page import="javax.servlet.http.HttpServletRequest" %>
+<%@ page import="javax.servlet.http.HttpServletResponse" %>
+<%@ page import="javax.servlet.http.Part" %>
+
+<%@ page import="java.nio.file.Files" %>
+<%@ page import="java.nio.file.Path" %>
+<%@ page import="java.nio.file.StandardCopyOption" %>
+
 <html>
 <head>
     <title>User Profile</title>
@@ -25,26 +43,33 @@
 
 <%
     if ("POST".equalsIgnoreCase(request.getMethod())) {
-        // Process image upload after login
         int userId = (int) request.getAttribute("userId");
         String userName = (String) request.getAttribute("userName");
 
-        Part filePart = request.getPart("profileImage");
-        String fileName = getFileName(filePart);
-        String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
-        File fileUploadDirectory = new File(uploadPath);
-        if (!fileUploadDirectory.exists()) {
-            fileUploadDirectory.mkdirs();
-        }
-        String filePath = uploadPath + File.separator + fileName;
-        filePart.write(filePath);
+        Collection<Part> parts = request.getParts();
+        for (Part part : parts) {
+            if ("profileImage".equals(part.getName())) {
+                String fileName = getFileName(part);
+                String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
+                File fileUploadDirectory = new File(uploadPath);
+                if (!fileUploadDirectory.exists()) {
+                    fileUploadDirectory.mkdirs();
+                }
+                String filePath = uploadPath + File.separator + fileName;
+                
+                // Save the uploaded file to the server
+                try (InputStream input = part.getInputStream()) {
+                    Files.copy(input, Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
+                }
 
-        // Display a message indicating successful image upload
-        out.println("<div class=\"container\">");
-        out.println("<h1 class=\"success-message\">Welcome, " + userName + "!</h1>");
-        out.println("<p class=\"success-message\">Profile image uploaded successfully.</p>");
-        out.println("<img id=\"profile-image\" src=\"" + filePath + "\" alt=\"Profile Image\">");
-        out.println("</div>");
+                // Display a message indicating successful image upload
+                out.println("<div class=\"container\">");
+                out.println("<h1 class=\"success-message\">Welcome, " + userName + "!</h1>");
+                out.println("<p class=\"success-message\">Profile image uploaded successfully.</p>");
+                out.println("<img id=\"profile-image\" src=\"" + filePath + "\" alt=\"Profile Image\">");
+                out.println("</div>");
+            }
+        }
     }
 %>
 
@@ -58,6 +83,15 @@
         <button type="submit">Upload</button>
     </div>
 </form>
+
+<%@ page import="java.util.Collection" %>
+
+<%@ page import="java.io.File" %>
+<%@ page import="java.io.IOException" %>
+<%@ page import="java.io.InputStream" %>
+<%@ page import="java.nio.file.Files" %>
+<%@ page import="java.nio.file.Path" %>
+<%@ page import="java.nio.file.StandardCopyOption" %>
 
 </body>
 </html>
