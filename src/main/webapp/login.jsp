@@ -71,12 +71,12 @@
         <label for="psw-repeat"><b>Repeat Password</b></label>
         <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required>
         <br>
-        /*
+        <%
         <label for="profileImage">Choose Profile Image:</label>
         <input type="file" id="profileImage" name="profileImage" accept="image/*">
         <br>
 
-        <img id="google-logo" src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google Logo"> */
+        <img id="google-logo" src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google Logo"> %>
         
         <hr>
         <br>
