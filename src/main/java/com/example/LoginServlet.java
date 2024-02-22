@@ -19,9 +19,9 @@ import javax.servlet.http.Part;
 @WebServlet("/login")
 @MultipartConfig
 public class LoginServlet extends HttpServlet {
-    private static final String JDBC_URL = "jdbc:mysql://your_database_host:3306/your_database_name";
-    private static final String JDBC_USER = "your_database_user";
-    private static final String JDBC_PASSWORD = "your_database_password";
+    private static final String JDBC_URL = "jdbc:mysql://192.168.138.114:3306/myDB";
+    private static final String JDBC_USER = "mysql";
+    private static final String JDBC_PASSWORD = "mysql";
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
