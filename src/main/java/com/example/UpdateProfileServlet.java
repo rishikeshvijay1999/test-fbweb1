@@ -45,8 +45,12 @@ public class UpdateProfileServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Handle GET requests, e.g., redirect to updateProfile.jsp
-        response.sendRedirect(request.getContextPath() + "/updateProfile.jsp");
+        // Retrieve user details from the database and set them as request attributes
+        int userId = getUserIdFromSession(request);
+        retrieveUserDetails(request, userId);
+
+        // Forward to updateProfile.jsp
+        request.getRequestDispatcher("/updateProfile.jsp").forward(request, response);
     }
 
     private int getUserIdFromSession(HttpServletRequest request) {
@@ -76,5 +80,15 @@ public class UpdateProfileServlet extends HttpServlet {
 
             updateUserDetailsStatement.executeUpdate();
         }
+    }
+
+    private void retrieveUserDetails(HttpServletRequest request, int userId) {
+        // Implement the logic to retrieve user details from the database
+        // Set user details as request attributes
+        // For example:
+        request.setAttribute("userName", "John Doe");
+        request.setAttribute("userMobile", "1234567890");
+        request.setAttribute("userBio", "Web Developer");
+        request.setAttribute("userAddress", "123 Main St");
     }
 }
