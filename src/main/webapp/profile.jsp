@@ -1,21 +1,21 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.nio.file.Paths" %>
+<%@ page import="java.nio.file.StandardCopyOption" %>
+<%@ page import="java.nio.file.Files" %>
+
+<%@ page import="java.util.Collection" %>
+<%@ page import="javax.servlet.annotation.MultipartConfig" %>
 <%@ page import="java.io.File" %>
 <%@ page import="java.io.IOException" %>
+<%@ page import="java.io.InputStream" %>
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="java.security.MessageDigest" %>
 <%@ page import="java.security.NoSuchAlgorithmException" %>
-<%@ page import="java.util.Collection" %>
-<%@ page import="javax.servlet.ServletException" %>
-<%@ page import="javax.servlet.annotation.MultipartConfig" %>
-<%@ page import="javax.servlet.annotation.WebServlet" %>
-<%@ page import="javax.servlet.http.HttpServlet" %>
-<%@ page import="javax.servlet.http.HttpServletRequest" %>
-<%@ page import="javax.servlet.http.HttpServletResponse" %>
-<%@ page import="javax.servlet.http.Part" %>
 
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.nio.file.Paths" %>
+<%@ page import="java.nio.file.StandardCopyOption" %>
 <%@ page import="java.nio.file.Files" %>
 <%@ page import="java.nio.file.Path" %>
-<%@ page import="java.nio.file.StandardCopyOption" %>
 
 <html>
 <head>
@@ -42,6 +42,18 @@
 <body>
 
 <%
+    // Add this utility method
+    String getFileName(Part part) {
+        String contentDisposition = part.getHeader("content-disposition");
+        String[] tokens = contentDisposition.split(";");
+        for (String token : tokens) {
+            if (token.trim().startsWith("filename")) {
+                return token.substring(token.indexOf('=') + 1).trim().replace("\"", "");
+            }
+        }
+        return "";
+    }
+
     if ("POST".equalsIgnoreCase(request.getMethod())) {
         int userId = (int) request.getAttribute("userId");
         String userName = (String) request.getAttribute("userName");
@@ -56,7 +68,7 @@
                     fileUploadDirectory.mkdirs();
                 }
                 String filePath = uploadPath + File.separator + fileName;
-                
+
                 // Save the uploaded file to the server
                 try (InputStream input = part.getInputStream()) {
                     Files.copy(input, Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
@@ -83,15 +95,6 @@
         <button type="submit">Upload</button>
     </div>
 </form>
-
-<%@ page import="java.util.Collection" %>
-
-<%@ page import="java.io.File" %>
-<%@ page import="java.io.IOException" %>
-<%@ page import="java.io.InputStream" %>
-<%@ page import="java.nio.file.Files" %>
-<%@ page import="java.nio.file.Path" %>
-<%@ page import="java.nio.file.StandardCopyOption" %>
 
 </body>
 </html>
