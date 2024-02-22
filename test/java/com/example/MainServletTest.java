@@ -40,7 +40,7 @@ public class MainServletTest {
 
         writer.flush();
         result = new String(writer.getBuffer().toString().getBytes(StandardCharsets.UTF_8));
-        assertTrue(result.contains("Invalid input for Name"));
+        assertTrue(result.contains("Invalid input for Name : Name should be letters only"));
 
         // Test case 3: Invalid mobile number (not 10 digits)
         Mockito.when(request.getParameter("Name")).thenReturn("JohnDoe");
@@ -49,7 +49,7 @@ public class MainServletTest {
 
         writer.flush();
         result = new String(writer.getBuffer().toString().getBytes(StandardCharsets.UTF_8));
-        assertTrue(result.contains("Invalid input for Mobile"));
+        assertTrue(result.contains("Invalid input for Mobile : Number must contain 10 digits"));
 
         // Test case 4: Invalid password (less than 8 characters)
         Mockito.when(request.getParameter("mobile")).thenReturn("1234567890");
@@ -58,6 +58,6 @@ public class MainServletTest {
 
         writer.flush();
         result = new String(writer.getBuffer().toString().getBytes(StandardCharsets.UTF_8));
-        assertTrue(result.contains("Invalid input for Password"));
+        assertTrue(result.contains("Invalid input for Password : password contain atleast 8 chracters"));
     }
 }
