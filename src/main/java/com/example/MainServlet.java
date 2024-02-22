@@ -60,7 +60,7 @@ public class MainServlet extends HttpServlet {
                         if (generatedKeys.next()) {
                             int userId = generatedKeys.getInt(1);
 
-                            // Store additional details in a separate table or modify the existing table structure
+                            // Store additional details in the user_details table
                             storeAdditionalDetails(connection, userId, bio, address);
 
                             out.println("User registered successfully!");
@@ -86,7 +86,13 @@ public class MainServlet extends HttpServlet {
             preparedStatement.setString(2, bio);
             preparedStatement.setString(3, address);
 
-            preparedStatement.executeUpdate();
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Additional details stored successfully!");
+            } else {
+                System.out.println("Failed to store additional details.");
+            }
         }
     }
 
