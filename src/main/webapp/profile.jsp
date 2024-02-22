@@ -27,7 +27,7 @@
         <p class="bio"><strong>Bio:</strong> <%= request.getAttribute("userBio") %></p>
         <p><strong>Address:</strong> <%= request.getAttribute("userAddress") %></p>
     </div>
-    
+
     <!-- Add a link to update profile -->
     <a href="<%= request.getContextPath() %>/updateProfile">Update Profile</a>
 
