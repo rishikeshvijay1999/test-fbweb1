@@ -44,17 +44,17 @@ public class MainServlet extends HttpServlet {
                 }
 
                 if (!isValidName(name)) {
-                    out.println("Invalid input for Name, Name does not contain numbers only letters");
+                    out.println("Invalid input for Name : Name contains letters only");
                     return;
                 }
 
                 if (!isValidMobile(mobile)) {
-                    out.println("Invalid input for Mobile");
+                    out.println("Invalid input for Mobile : Number shoud be 10 digits only");
                     return;
                 }
 
                 if (!isValidPassword(password)) {
-                    out.println("Invalid input for Password");
+                    out.println("Invalid input for Password : Password contain atleast 8 characters");
                     return;
                 }
 
