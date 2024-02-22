@@ -14,7 +14,7 @@
 
 <div class="container">
     <h1>Update Your Profile</h1>
-    <form action="<%= request.getContextPath() %>/updateProfile" method="post">
+    <form action="<%= request.getContextPath() %>/updateProfile?userId=<%= request.getAttribute("userId") %>" method="post">
         <label for="name"><b>Name:</b></label>
         <input type="text" placeholder="Enter Name" name="name" value="<%= request.getAttribute("userName") %>">
         <br>
