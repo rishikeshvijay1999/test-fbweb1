@@ -33,6 +33,11 @@
         <p class="bio"><strong>Bio:</strong> <%= request.getAttribute("userBio") %></p>
         <p><strong>Address:</strong> <%= request.getAttribute("userAddress") %></p>
     </div>
+    
+    <!-- Logout button -->
+    <form action="<%= request.getContextPath() %>/logout" method="post">
+        <button type="submit">Logout</button>
+    </form>
 </div>
 
 </body>
