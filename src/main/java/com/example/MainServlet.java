@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -15,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 @WebServlet("/main")
 @MultipartConfig
@@ -23,7 +25,8 @@ public class MainServlet extends HttpServlet {
     private static final String JDBC_USER = "mysql";
     private static final String JDBC_PASSWORD = "mysql";
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         PrintWriter out = response.getWriter();
 
         try {
@@ -40,21 +43,6 @@ public class MainServlet extends HttpServlet {
                 // Check if the email already exists in the database
                 if (isEmailRegistered(connection, email)) {
                     out.println("Email already registered. Please choose another email.");
-                    return;
-                }
-
-                if (!isValidName(name)) {
-                    out.println("Invalid input for Name : Name contains letters only");
-                    return;
-                }
-
-                if (!isValidMobile(mobile)) {
-                    out.println("Invalid input for Mobile : Number shoud be 10 digits only");
-                    return;
-                }
-
-                if (!isValidPassword(password)) {
-                    out.println("Invalid input for Password : Password contain atleast 8 characters");
                     return;
                 }
 
@@ -93,7 +81,8 @@ public class MainServlet extends HttpServlet {
         }
     }
 
-    private void storeAdditionalDetails(Connection connection, int userId, String bio, String address) throws SQLException {
+    private void storeAdditionalDetails(Connection connection, int userId, String bio, String address)
+            throws SQLException {
         String sql = "INSERT INTO user_details (user_id, bio, address) VALUES (?, ?, ?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -134,20 +123,5 @@ public class MainServlet extends HttpServlet {
         }
 
         return stringBuilder.toString();
-    }
-
-    private boolean isValidName(String name) {
-        // Simple validation: Only letters allowed in the name
-        return name.matches("[a-zA-Z]+");
-    }
-
-    private boolean isValidMobile(String mobile) {
-        // Simple validation: Numeric and 10 digits
-        return mobile.matches("\\d{10}");
-    }
-
-    private boolean isValidPassword(String password) {
-        // Simple validation: At least 8 characters
-        return password.length() >= 8;
     }
 }
