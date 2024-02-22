@@ -18,6 +18,13 @@ public class UpdateProfileServlet extends HttpServlet {
     private static final String JDBC_USER = "mysql";
     private static final String JDBC_PASSWORD = "mysql";
 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int userId = getUserIdFromSession(request);
+        retrieveUserDetails(request, userId);
+        request.getRequestDispatcher("/updateProfile.jsp").forward(request, response);
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
@@ -42,16 +49,6 @@ public class UpdateProfileServlet extends HttpServlet {
             e.printStackTrace();
             out.println("Error: " + e.getMessage());
         }
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        // Retrieve user details from the database and set them as request attributes
-        int userId = getUserIdFromSession(request);
-        retrieveUserDetails(request, userId);
-
-        // Forward to updateProfile.jsp
-        request.getRequestDispatcher("/updateProfile.jsp").forward(request, response);
     }
 
     private int getUserIdFromSession(HttpServletRequest request) {
