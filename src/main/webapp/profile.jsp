@@ -8,11 +8,6 @@
             margin: auto;
             text-align: center;
         }
-        #profileImage {
-            max-width: 200px;
-            max-height: 200px;
-            border-radius: 50%;
-        }
         .user-details {
             margin-top: 20px;
             text-align: left;
@@ -26,7 +21,6 @@
 
 <div class="container">
     <h1>Welcome, <%= request.getAttribute("userName") %>!</h1>
-    <img id="profileImage" src="<%= request.getAttribute("profileImage") %>" alt="Profile Image">
     <div class="user-details">
         <p><strong>Email:</strong> <%= request.getAttribute("userEmail") %></p>
         <p><strong>Mobile:</strong> <%= request.getAttribute("userMobile") %></p>
