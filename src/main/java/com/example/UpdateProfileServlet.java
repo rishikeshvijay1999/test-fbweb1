@@ -3,6 +3,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -83,12 +84,41 @@ public class UpdateProfileServlet extends HttpServlet {
     }
 
     private void retrieveUserDetails(HttpServletRequest request, int userId) {
-        // Implement the logic to retrieve user details from the database
-        // Set user details as request attributes
-        // For example:
-        request.setAttribute("userName", "John Doe");
-        request.setAttribute("userMobile", "1234567890");
-        request.setAttribute("userBio", "Web Developer");
-        request.setAttribute("userAddress", "123 Main St");
+        String userSql = "SELECT * FROM web WHERE id=?";
+        try (Connection connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
+             PreparedStatement userStatement = connection.prepareStatement(userSql)) {
+
+            userStatement.setInt(1, userId);
+            try (ResultSet userResultSet = userStatement.executeQuery()) {
+                if (userResultSet.next()) {
+                    // Retrieve user details from the 'web' table
+                    String userName = userResultSet.getString("name");
+                    String userMobile = userResultSet.getString("mobile");
+
+                    // Set user details as request attributes
+                    request.setAttribute("userName", userName);
+                    request.setAttribute("userMobile", userMobile);
+                }
+            }
+
+            String userDetailsSql = "SELECT * FROM user_details WHERE user_id=?";
+            try (PreparedStatement userDetailsStatement = connection.prepareStatement(userDetailsSql)) {
+                userDetailsStatement.setInt(1, userId);
+
+                try (ResultSet userDetailsResultSet = userDetailsStatement.executeQuery()) {
+                    if (userDetailsResultSet.next()) {
+                        // Retrieve additional details from the 'user_details' table
+                        String userBio = userDetailsResultSet.getString("bio");
+                        String userAddress = userDetailsResultSet.getString("address");
+
+                        // Set additional details as request attributes
+                        request.setAttribute("userBio", userBio);
+                        request.setAttribute("userAddress", userAddress);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
