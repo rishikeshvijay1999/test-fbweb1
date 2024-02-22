@@ -43,6 +43,12 @@ public class UpdateProfileServlet extends HttpServlet {
         }
     }
 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Handle GET requests, e.g., redirect to updateProfile.jsp
+        response.sendRedirect(request.getContextPath() + "/updateProfile.jsp");
+    }
+
     private int getUserIdFromSession(HttpServletRequest request) {
         // Implement the logic to retrieve the user ID from the session
         // This might involve using HttpSession and extracting the user ID attribute
