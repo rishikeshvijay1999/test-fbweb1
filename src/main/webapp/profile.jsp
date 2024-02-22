@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Update Profile - Facebook Lite</title>
+    <title>User Profile - Facebook Lite</title>
     <style>
         .container {
             width: 50%;
@@ -13,26 +13,33 @@
             max-height: 200px;
             border-radius: 50%;
         }
+        .user-details {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .bio {
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Update Your Profile</h1>
-    <form action="<%= request.getContextPath() %>/updateProfile" method="post" enctype="multipart/form-data">
-        <label for="bio"><b>Bio:</b></label>
-        <input type="text" placeholder="Enter Bio" name="bio" value="<%= request.getAttribute("userBio") %>">
-        <br>
+    <h1>Welcome, <%= request.getAttribute("userName") %>!</h1>
+    <img id="profileImage" src="<%= request.getAttribute("profileImage") %>" alt="Profile Image">
+    <div class="user-details">
+        <p><strong>Email:</strong> <%= request.getAttribute("userEmail") %></p>
+        <p><strong>Mobile:</strong> <%= request.getAttribute("userMobile") %></p>
+        <p class="bio"><strong>Bio:</strong> <%= request.getAttribute("userBio") %></p>
+        <p><strong>Address:</strong> <%= request.getAttribute("userAddress") %></p>
+    </div>
+    
+    <!-- Add a link to update profile -->
+    <a href="<%= request.getContextPath() %>/updateProfile">Update Profile</a>
 
-        <label for="address"><b>Address:</b></label>
-        <input type="text" placeholder="Enter Address" name="address" value="<%= request.getAttribute("userAddress") %>">
-        <br>
-
-        <label for="profileImage">Update Profile Image:</label>
-        <input type="file" id="profileImage" name="profileImage" accept="image/*">
-        <br>
-
-        <button type="submit">Update Profile</button>
+    <!-- Logout button -->
+    <form action="<%= request.getContextPath() %>/logout" method="post">
+        <button type="submit">Logout</button>
     </form>
 </div>
 
