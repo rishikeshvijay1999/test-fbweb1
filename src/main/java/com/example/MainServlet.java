@@ -43,6 +43,21 @@ public class MainServlet extends HttpServlet {
                     return;
                 }
 
+                if (!isValidName(name)) {
+                    out.println("Invalid input for Name");
+                    return;
+                }
+
+                if (!isValidMobile(mobile)) {
+                    out.println("Invalid input for Mobile");
+                    return;
+                }
+
+                if (!isValidPassword(password)) {
+                    out.println("Invalid input for Password");
+                    return;
+                }
+
                 String hashedPassword = hashPassword(password);
 
                 String sql = "INSERT INTO web (name, mobile, email, password) VALUES (?, ?, ?, ?)";
@@ -119,5 +134,20 @@ public class MainServlet extends HttpServlet {
         }
 
         return stringBuilder.toString();
+    }
+
+    private boolean isValidName(String name) {
+        // Simple validation: Only letters allowed in the name
+        return name.matches("[a-zA-Z]+");
+    }
+
+    private boolean isValidMobile(String mobile) {
+        // Simple validation: Numeric and 10 digits
+        return mobile.matches("\\d{10}");
+    }
+
+    private boolean isValidPassword(String password) {
+        // Simple validation: At least 8 characters
+        return password.length() >= 8;
     }
 }
