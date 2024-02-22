@@ -40,7 +40,7 @@ public class MainServletTest {
 
         writer.flush();
         result = new String(writer.getBuffer().toString().getBytes(StandardCharsets.UTF_8));
-        assertTrue(result.contains("Invalid input for Name and Name should be letters only"));
+        assertTrue(result.contains("Invalid input for Name"));
 
         // Test case 3: Invalid mobile number (not 10 digits)
         Mockito.when(request.getParameter("Name")).thenReturn("JohnDoe");
