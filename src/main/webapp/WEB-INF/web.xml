@@ -14,7 +14,7 @@
   <url-pattern>/hello</url-pattern>
   </servlet-mapping>
   -->
- <!-- Logout Servlet Mapping -->
+ <!-- Logout Servlet Mapping 
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
         <servlet-class>com.example.LogoutServlet</servlet-class>
@@ -22,5 +22,5 @@
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/logout</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping> -->
 </web-app>
