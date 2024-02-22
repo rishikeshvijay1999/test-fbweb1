@@ -22,6 +22,13 @@
             <version>3.1.0</version>
             <scope>provided</scope>
         </dependency>
+           <!-- Junit -->  
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.1</version>
+            <scope>test</scope>
+        </dependency>
 
         <!-- MySQL Connector -->
         <dependency>
