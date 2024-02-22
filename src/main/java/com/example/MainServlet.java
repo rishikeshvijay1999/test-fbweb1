@@ -44,7 +44,7 @@ public class MainServlet extends HttpServlet {
                 }
 
                 if (!isValidName(name)) {
-                    out.println("Invalid input for Name");
+                    out.println("Invalid input for Name, Name does not contain numbers only letters");
                     return;
                 }
 
