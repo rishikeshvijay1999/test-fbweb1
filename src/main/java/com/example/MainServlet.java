@@ -7,13 +7,17 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/main")
+@MultipartConfig
 public class MainServlet extends HttpServlet {
     private static final String JDBC_URL = "jdbc:mysql://192.168.138.114:3306/myDB";
     private static final String JDBC_USER = "mysql";
@@ -30,6 +34,8 @@ public class MainServlet extends HttpServlet {
                 String mobile = request.getParameter("mobile");
                 String email = request.getParameter("email");
                 String password = request.getParameter("psw");
+                String bio = request.getParameter("bio");
+                String address = request.getParameter("address");
 
                 // Check if the email already exists in the database
                 if (isEmailRegistered(connection, email)) {
@@ -41,7 +47,7 @@ public class MainServlet extends HttpServlet {
 
                 String sql = "INSERT INTO web (name, mobile, email, password) VALUES (?, ?, ?, ?)";
 
-                try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                try (PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                     preparedStatement.setString(1, name);
                     preparedStatement.setString(2, mobile);
                     preparedStatement.setString(3, email);
@@ -50,7 +56,17 @@ public class MainServlet extends HttpServlet {
                     int rowsAffected = preparedStatement.executeUpdate();
 
                     if (rowsAffected > 0) {
-                        out.println("User registered successfully!");
+                        ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+                        if (generatedKeys.next()) {
+                            int userId = generatedKeys.getInt(1);
+
+                            // Store additional details in a separate table or modify the existing table structure
+                            storeAdditionalDetails(connection, userId, bio, address);
+
+                            out.println("User registered successfully!");
+                        } else {
+                            out.println("Failed to register user.");
+                        }
                     } else {
                         out.println("Failed to register user.");
                     }
@@ -59,6 +75,18 @@ public class MainServlet extends HttpServlet {
         } catch (ClassNotFoundException | SQLException | NoSuchAlgorithmException e) {
             e.printStackTrace();
             out.println("Error: " + e.getMessage());
+        }
+    }
+
+    private void storeAdditionalDetails(Connection connection, int userId, String bio, String address) throws SQLException {
+        String sql = "INSERT INTO user_details (user_id, bio, address) VALUES (?, ?, ?)";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setString(2, bio);
+            preparedStatement.setString(3, address);
+
+            preparedStatement.executeUpdate();
         }
     }
 
