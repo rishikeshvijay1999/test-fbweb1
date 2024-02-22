@@ -9,15 +9,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 
 @WebServlet("/login")
-@MultipartConfig
 public class LoginServlet extends HttpServlet {
     private static final String JDBC_URL = "jdbc:mysql://192.168.138.114:3306/myDB";
     private static final String JDBC_USER = "mysql";
@@ -43,7 +40,11 @@ public class LoginServlet extends HttpServlet {
                         if (resultSet.next()) {
                             // Set user attributes for the profile.jsp
                             request.setAttribute("userName", resultSet.getString("name"));
-                            request.setAttribute("userId", resultSet.getInt("id"));
+                            request.setAttribute("userEmail", resultSet.getString("email"));
+                            request.setAttribute("userMobile", resultSet.getString("mobile"));
+
+                            // Retrieve additional details from the user_details table
+                            retrieveAdditionalDetails(request, resultSet.getInt("id"));
 
                             // Forward to profile.jsp
                             request.getRequestDispatcher("/profile.jsp").forward(request, response);
@@ -57,6 +58,20 @@ public class LoginServlet extends HttpServlet {
         } catch (ClassNotFoundException | SQLException | NoSuchAlgorithmException e) {
             e.printStackTrace();
             out.println("Error: " + e.getMessage());
+        }
+    }
+
+    private void retrieveAdditionalDetails(HttpServletRequest request, int userId) throws SQLException {
+        String sql = "SELECT * FROM user_details WHERE user_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, userId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    request.setAttribute("userBio", resultSet.getString("bio"));
+                    request.setAttribute("userAddress", resultSet.getString("address"));
+                }
+            }
         }
     }
 
