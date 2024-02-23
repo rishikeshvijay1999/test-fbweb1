@@ -10,6 +10,6 @@ public class MainServletTest {
         String simulatedJspContent = "<html>\n<body>\nWelcome to my website. This is a Facebook page.\n</body>\n</html>";
 
         // Replace this with the actual logic of your test
-        assertTrue(simulatedJspContent.contains("facebook"));
+        assertTrue(simulatedJspContent.contains("Facebook"));
     }
 }
