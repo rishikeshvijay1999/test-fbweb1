@@ -1,16 +1,15 @@
-import org.junit.Test;
+import static org.junit.Assert.*;
 
-import static org.junit.Assert.fail;
+import org.junit.Test;
 
 public class MainServletTest {
 
     @Test
-    public void testLiteWordPresence() {
-        // Check if the word "lite" is present in the code
-        String codeToTest = "lite";
-        if (codeToTest.contains("lite")) {
-            // Fail the test and prevent successful build and deployment
-            fail("The word 'lite' is present in the code. Build and deployment should fail.");
-        }
+    public void testIndexJspContent() {
+        // Simulating the presence of "facebook" in index.jsp content for testing
+        String simulatedJspContent = "<html>\n<body>\nWelcome to my website. This is a Facebook page.\n</body>\n</html>";
+
+        // Replace this with the actual logic of your test
+        assertTrue(simulatedJspContent.contains("facebook"));
     }
 }
