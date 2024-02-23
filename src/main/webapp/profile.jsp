@@ -3,6 +3,12 @@
 <head>
     <title>User Profile - Facebook Lite</title>
     <style>
+        body {
+            background-color: #034f84; /* Set your desired background color */
+        }
+        /* Existing styles remain unchanged */
+    </style>
+    <style>
         .container {
             width: 50%;
             margin: auto;
