@@ -4,7 +4,7 @@
     <title>User Registration and Login Form</title>
     <style>
         body {
-            background-color: #f0f0f0; /* Set your desired background color */
+            background-color: #0000FF; /* Set your desired background color */
         }
         /* Existing styles remain unchanged */
     </style>
