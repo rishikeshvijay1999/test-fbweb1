@@ -16,15 +16,16 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
+    // JDBC connection parameters
     private static final String JDBC_URL = "jdbc:mysql://192.168.138.114:3306/myDB";
     private static final String JDBC_USER = "mysql";
     private static final String JDBC_PASSWORD = "mysql";
-    
+
     // Declare the connection variable at the class level
     private Connection connection;
 
+    // Initialize the connection in the init() method
     public void init() throws ServletException {
-        // Initialize the connection in the init() method
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
@@ -33,19 +34,24 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
+    // Handling HTTP POST requests for login
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // PrintWriter to send response back to the client
         PrintWriter out = response.getWriter();
 
+        // Retrieve email and password from request parameters
         String email = request.getParameter("email");
         String password = request.getParameter("psw");
 
         try {
+            // SQL query to check if the email and hashed password match in the 'web' table
             String sql = "SELECT * FROM web WHERE LOWER(email) = LOWER(?) AND password=?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, email);
                 preparedStatement.setString(2, hashPassword(password));
 
+                // Execute the SQL query
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     if (resultSet.next()) {
                         // Set user attributes for the profile.jsp
@@ -65,16 +71,19 @@ public class LoginServlet extends HttpServlet {
                 }
             }
         } catch (SQLException | NoSuchAlgorithmException e) {
+            // Handle exceptions (e.g., SQLException, NoSuchAlgorithmException)
             e.printStackTrace();
             out.println("Error: " + e.getMessage());
         }
     }
 
+    // Method to retrieve additional details from the 'user_details' table
     private void retrieveAdditionalDetails(HttpServletRequest request, int userId) throws SQLException {
         String sql = "SELECT * FROM user_details WHERE user_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, userId);
 
+            // Execute the SQL query
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     request.setAttribute("userBio", resultSet.getString("bio"));
@@ -84,11 +93,13 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
+    // Method to hash the password using SHA-256
     private String hashPassword(String password) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         byte[] hashedBytes = md.digest(password.getBytes());
 
         StringBuilder stringBuilder = new StringBuilder();
+        // Convert the hashed bytes to a hexadecimal string
         for (byte b : hashedBytes) {
             stringBuilder.append(String.format("%02x", b));
         }
@@ -96,8 +107,8 @@ public class LoginServlet extends HttpServlet {
         return stringBuilder.toString();
     }
 
+    // Close the connection in the destroy() method
     public void destroy() {
-        // Close the connection in the destroy() method
         try {
             if (connection != null && !connection.isClosed()) {
                 connection.close();
