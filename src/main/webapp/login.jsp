@@ -14,7 +14,7 @@
         .error-message {
             color: red;
         }
-        #google-logo {
+        #Facebook Logo {
             width: 100px; /* Adjust the width as needed */
             height: auto;
             margin-bottom: 20px;
@@ -45,7 +45,7 @@
         }
     }
 %>
-
+<img id="facebook-logo" src="https://www.facebook.com/images/fb_icon_325x325.png" alt="Facebook Logo">
 <form action="<%= request.getContextPath() %>/main" method="post" enctype="multipart/form-data">
     <div class="container">
         <h1>New user Register for Facebook Lite</h1>
