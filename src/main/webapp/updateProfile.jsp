@@ -3,6 +3,11 @@
 <head>
     <title>Update Profile - Facebook Lite</title>
     <style>
+    h1 {
+        color: #c83349;
+    }
+    </style>
+    <style>
         .container {
             width: 50%;
             margin: auto;
@@ -14,7 +19,7 @@
 
 <div class="container">
     <h1>Update Your Profile</h1>
-    <h1>This page is Inprogress</h1>
+    <h2>This page is Inprogress</h2>
     <form action="<%= request.getContextPath() %>/updateProfile?userId=<%= request.getAttribute("userId") %>" method="post">
         <label for="name"><b>Name:</b></label>
         <input type="text" placeholder="Enter Name" name="name" value="<%= request.getAttribute("userName") %>">
