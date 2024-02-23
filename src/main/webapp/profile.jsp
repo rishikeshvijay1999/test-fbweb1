@@ -4,7 +4,7 @@
     <title>User Profile - Facebook Lite</title>
     <style>
         body {
-            background-color: #034f84; /* Set your desired background color */
+            background-color: #b1cbbb; /* Set your desired background color */
         }
         /* Existing styles remain unchanged */
     </style>
