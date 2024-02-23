@@ -32,6 +32,7 @@
 
 <%
     if ("POST".equalsIgnoreCase(request.getMethod())) {
+        // Handle form submission if the request method is POST
         String name = request.getParameter("Name");
         String mobile = request.getParameter("mobile");
         String email = request.getParameter("email");
@@ -39,13 +40,13 @@
         String confirmPassword = request.getParameter("psw-repeat");
 
         if (password.equals(confirmPassword)) {
-            // Display a message indicating successful registration
+            // If passwords match, display a success message and consider the user logged in
             out.println("<div class=\"container\" id=\"loggedin-container\">");
             out.println("<h1 class=\"success-message\">Thank you, " + name + "! You are logged in.</h1>");
             out.println("<img src=\"path/to/your/image.jpg\" alt=\"Profile Image\">");
             out.println("</div>");
         } else {
-            // Display a message indicating password mismatch
+            // If passwords do not match, display an error message
             out.println("<div class=\"container\">");
             out.println("<p class=\"error-message\">Passwords do not match. Please try again.</p>");
             out.println("</div>");
