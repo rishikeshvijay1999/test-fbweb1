@@ -21,7 +21,7 @@ public class MainServlet extends HttpServlet {
             out.print("Build failed! 'facebook' found in index.jsp.");
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } else {
-            out.print("Build successful! 'facebook' not found in index.jsp.");
+            out.print("Build successful! 'Facebook' not found in index.jsp.");
         }
         out.close();
     }
