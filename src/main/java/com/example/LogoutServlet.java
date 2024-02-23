@@ -9,11 +9,16 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
+    // Handling HTTP POST requests for logout
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // Retrieve the HttpSession
         HttpSession session = request.getSession();
-        session.invalidate(); // Invalidate the session to logout the user
+        
+        // Invalidate the session to logout the user (clears user-related data)
+        session.invalidate();
 
+        // Redirect the user to the login.jsp page after logout
         response.sendRedirect(request.getContextPath() + "/login.jsp");
     }
 }
