@@ -45,7 +45,6 @@
         }
     }
 %>
-<img id="facebook-logo" src="https://www.facebook.com/images/fb_icon_325x325.png" alt="Facebook Logo">
 <form action="<%= request.getContextPath() %>/main" method="post" enctype="multipart/form-data">
     <div class="container">
         <h1>New user Register for Facebook Lite</h1>
@@ -100,6 +99,7 @@
 
         <button type="submit" class="registerbtn">Login</button>
     </form>
+<img id="facebook-logo" src="https://www.facebook.com/images/fb_icon_325x325.png" alt="Facebook Logo">
 </div>
 
 </body>
