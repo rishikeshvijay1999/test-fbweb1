@@ -10,7 +10,7 @@
 
     <style>
         body {
-            background-color: #80ced6; /* Set your desired background color */
+            background-color: #EA4335; /* Set your desired background color */
         }
         /* Existing styles remain unchanged */
     </style>
