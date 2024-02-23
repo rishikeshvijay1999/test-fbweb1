@@ -3,7 +3,7 @@
 <head>
     <title>Update Profile - Facebook Lite</title>
     <style>
-    h1 {
+    h2 {
         color: #c83349;
     }
     </style>
