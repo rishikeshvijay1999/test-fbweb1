@@ -3,6 +3,12 @@
 <head>
     <title>User Registration and Login Form</title>
     <style>
+    h1 {
+        color: #34A853;
+    }
+    </style>
+
+    <style>
         body {
             background-color: #80ced6; /* Set your desired background color */
         }
