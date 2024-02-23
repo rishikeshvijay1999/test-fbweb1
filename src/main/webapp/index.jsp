@@ -3,6 +3,17 @@
 <head>
     <title>User Registration and Login Form</title>
     <style>
+    .registerbtn {
+        background-color: #34A853; /* Green color */
+        color: white;              /* White text color */
+        padding: 10px;
+        border: none;
+        text-decoration: none;
+        font-size: 16px;
+        cursor: pointer;
+    }
+</style>
+    <style>
     h1 {
         color: #34A853;
     }
