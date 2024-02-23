@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Update Profile - Facebook Lite</title>
+    <title>This page is Inprogress</title>
     <style>
         .container {
             width: 50%;
