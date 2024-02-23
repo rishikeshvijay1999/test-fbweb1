@@ -21,7 +21,7 @@
             color: red;
         }
         #login-btn {
-            background-color: #4CAF50;
+            background-color: #034f84; /* 4CAF50*/
             color: white;
             padding: 10px;
             border: none;
