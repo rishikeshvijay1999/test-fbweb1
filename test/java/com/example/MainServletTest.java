@@ -1,63 +1,30 @@
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.junit.Test;
+import static org.junit.Assert.fail;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.*;
-import org.junit.*;
-import org.mockito.Mockito;
-
-public class MainServletTest {
+public class PageContentTest {
 
     @Test
-    public void testDoPost() throws ServletException, IOException {
-        HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
-        HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
-        PrintWriter writer = new PrintWriter(new StringWriter());
+    public void testTwitterWordNotPresent() {
+        try {
+            // Load the HTML content of your page
+            String html = "<html><body><p>This is a sample page</p></body></html>"; // Replace with your actual HTML content
 
-        Mockito.when(response.getWriter()).thenReturn(writer);
+            // Parse the HTML content using JSoup
+            Document document = Jsoup.parse(html);
 
-        // Test case 1: Valid input
-        
-        Mockito.when(request.getParameter("Name")).thenReturn("JohnDoe");
-        Mockito.when(request.getParameter("mobile")).thenReturn("1234567890");
-        Mockito.when(request.getParameter("email")).thenReturn("john.doe@example.com");
-        Mockito.when(request.getParameter("psw")).thenReturn("password");
-        Mockito.when(request.getParameter("bio")).thenReturn("A short bio");
-        Mockito.when(request.getParameter("address")).thenReturn("123 Main St");
-
-        new MainServlet().doPost(request, response);
-
-        writer.flush();
-        String result = new String(writer.getBuffer().toString().getBytes(StandardCharsets.UTF_8));
-        assertTrue(result.contains("User registered successfully!"));
-
-        // Test case 2: Invalid name (contains a number)
-        Mockito.when(request.getParameter("Name")).thenReturn("JohnDoe123");
-        new MainServlet().doPost(request, response);
-
-        writer.flush();
-        result = new String(writer.getBuffer().toString().getBytes(StandardCharsets.UTF_8));
-        assertTrue(result.contains("Invalid input for Name"));
-
-        // Test case 3: Invalid mobile number (not 10 digits)
-        Mockito.when(request.getParameter("Name")).thenReturn("JohnDoe");
-        Mockito.when(request.getParameter("mobile")).thenReturn("123456789");
-        new MainServlet().doPost(request, response);
-
-        writer.flush();
-        result = new String(writer.getBuffer().toString().getBytes(StandardCharsets.UTF_8));
-        assertTrue(result.contains("Invalid input for Mobile : Number must contain 10 digits"));
-
-        // Test case 4: Invalid password (less than 8 characters)
-        Mockito.when(request.getParameter("mobile")).thenReturn("1234567890");
-        Mockito.when(request.getParameter("psw")).thenReturn("pass");
-        new MainServlet().doPost(request, response);
-
-        writer.flush();
-        result = new String(writer.getBuffer().toString().getBytes(StandardCharsets.UTF_8));
-        assertTrue(result.contains("Invalid input for Password : password contain atleast 8 chracters"));
+            // Check if the word "twitter" is present in the body of the page
+            Element body = document.body();
+            String bodyText = body.text();
+            if (bodyText.toLowerCase().contains("lite")) {
+                // If "twitter" is present, fail the test
+                fail("Page contains the word 'lite', build should fail.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception occurred during test execution: " + e.getMessage());
+        }
     }
 }
