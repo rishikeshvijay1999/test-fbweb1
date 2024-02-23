@@ -35,6 +35,7 @@
     <form action="<%= request.getContextPath() %>/logout" method="post">
         <button type="submit">Logout</button>
     </form>
+<img id="facebook-logo" src="https://www.facebook.com/images/fb_icon_325x325.png" alt="Facebook Logo">
 </div>
 
 </body>
