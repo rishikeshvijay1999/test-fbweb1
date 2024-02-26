@@ -8,6 +8,16 @@ MYSQL
 Tomcat
 ---------------
 
+#### Git commands
+```
+git clone <repo_url>
+git add .
+git commit -m "message"
+git push origin -u <branch_name>
+git branch 			#To check barnch name
+git checkout -b <branch_name> 	#To create banch name
+git checkout <branch-name> 	#To switch branch
+```
 
 #### Jenkins Installations in ubuntu22.04:
 
