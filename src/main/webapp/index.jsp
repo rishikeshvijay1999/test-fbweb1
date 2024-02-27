@@ -79,7 +79,7 @@
 
 <form action="<%= request.getContextPath() %>/main" method="post">
     <div class="container">
-        <h1>New user Register for Instagram ultra Lite</h1>
+        <h1>New user Register for Facebook Lite</h1>
         <p>Please fill in this form to create an account.</p>
         <hr>
 
