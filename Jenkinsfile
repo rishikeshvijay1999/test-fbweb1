@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout code from Git repository
-                git branch: 'main', url: 'https://github.com/beeru405/test-fbweb1.git'
+                git branch: 'main', url: 'https://github.com/rishikeshvijay1999/test-fbweb1.git'
             }
         }
 
@@ -19,7 +19,7 @@ pipeline {
         stage('Deploy to Tomcat') {
             steps {
                 // Copy the war file to Tomcat webapps directory
-                deploy adapters: [tomcat8(credentialsId: 'tomcat', path: '', url: 'http://192.168.138.114:8081/')], contextPath: null, war: '**/*.war'
+                deploy adapters: [tomcat8(credentialsId: 'tomcat', path: '', url: 'http://192.168.75.157:8081/')], contextPath: null, war: '**/*.war'
             }
         }
     }
